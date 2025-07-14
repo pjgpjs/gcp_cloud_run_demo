@@ -1,15 +1,9 @@
 package com.cloudrun.microservicetemplate;
 
 
-import java.util.List;
-
 import com.cloudrun.ProjectConst;
-import com.google.cloud.vertexai.VertexAI;
-import com.google.cloud.vertexai.api.Content;
-import com.google.cloud.vertexai.api.GenerateContentResponse;
-import com.google.cloud.vertexai.generativeai.GenerativeModel;
-import com.google.cloud.vertexai.generativeai.PartMaker;
-import com.google.cloud.vertexai.generativeai.ResponseHandler;
+import com.google.genai.Client;
+import com.google.genai.types.GenerateContentResponse;
 public class VertexAiText {
   // This class is a placeholder for future Vertex AI text generation functionality.
   // Currently, it does not contain any methods or properties.
@@ -23,11 +17,11 @@ public class VertexAiText {
     //use Gemini API
     // Client client = Client.builder().apiKey(ProjectConst.API_KEY).build();
     //use Vertext AI API
-    // Client client = Client.builder()
-    //         .project(ProjectConst.GCP_PROJECT_ID)
-    //         .location(ProjectConst.LOCATION)
-    //         .vertexAI(true)
-    //         .build();
+    Client client = Client.builder()
+            .project(ProjectConst.GCP_PROJECT_ID)
+            .location(ProjectConst.LOCATION)
+            .vertexAI(true)
+            .build();
    
     public String request(){
       
@@ -40,41 +34,15 @@ public class VertexAiText {
       String gcsUriB = "gs://document_compare/form_1040_2023.pdf";
       // ------------ㄴㄴ
 
-      try (VertexAI vertexAI = new VertexAI(projectId, location)) {
-        GenerativeModel model = new GenerativeModel(modelName, vertexAI);
-        // String promptText = "The first document is from 2013, and the second document is from 2023. How did the standard deduction evolve?";
-        
-        // // 1. 첫 번째 PDF 파일에 대한 Content 객체 생성
-        // Content fileContentA = Content.newBuilder()
-        //     .addParts(PartMaker.fromMimeTypeAndData("application/pdf", gcsUriA))
-        //     .build();
-          
-        // // 2. 두 번째 PDF 파일에 대한 Content 객체 생성
-        // Content fileContentB = Content.newBuilder()
-        //     .addParts(PartMaker.fromMimeTypeAndData("application/pdf", gcsUriB))
-        //     .build();
-          
-        // // 3. 텍스트 프롬프트에 대한 Content 객체 생성
-        // Content textContent = Content.newBuilder()
-        //     .addParts(PartMaker.fromMimeTypeAndData("text/plain", promptText))
-        //     .build();
-        String promptText ="자기 소개 해줘줘";
-         Content textContent = Content.newBuilder()
-            .addParts(PartMaker.fromMimeTypeAndData("text/plain", promptText))
-            .build();
-        // 4. 모든 Content 객체를 리스트에 담아 요청 전송
-        // List<Content> contents = List.of(fileContentA, fileContentB, textContent);
-        List<Content> contents = List.of(textContent);
-        GenerateContentResponse response = model.generateContent(textContent);
-        
-        String output = ResponseHandler.getText(response);
-        System.out.println("--- Analysis Result ---");
-        System.out.println(output);
-        return output;
-      } catch (Exception e) {
-          System.err.println("API 호출 중 오류 발생: " + e.getMessage());
-          e.printStackTrace();
-          return "Error: " + e.getMessage();
+      String promptString = "너는 누구니?";
+      try{
+          GenerateContentResponse response =
+                  client.models.generateContent("gemini-2.0-flash-001", promptString, null);
+          String result = response.text();
+          return result;
+      }catch(Exception e){
+        e.printStackTrace();
+        return "Error: " + e.getMessage();
       }
    }
 }
