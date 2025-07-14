@@ -65,7 +65,7 @@ public class VertexAiText {
         // 4. 모든 Content 객체를 리스트에 담아 요청 전송
         // List<Content> contents = List.of(fileContentA, fileContentB, textContent);
         List<Content> contents = List.of(textContent);
-        GenerateContentResponse response = model.generateContent(contents);
+        GenerateContentResponse response = model.generateContent(textContent);
         
         String output = ResponseHandler.getText(response);
         System.out.println("--- Analysis Result ---");
