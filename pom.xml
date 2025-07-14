@@ -17,30 +17,22 @@ limitations under the License.
   <artifactId>microservice-template</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>microservice-template</name>
-  <description>Microservice Template using Vertex AI</description>
+  <description>Microservice Template</description>
 
   <properties>
-    <java.version>17</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
   </properties>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.5.3</version>
-    <relativePath/>
+    <relativePath /> <!-- lookup parent from repository -->
   </parent>
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>com.google.cloud</groupId>
-        <artifactId>libraries-bom</artifactId>
-        <version>26.38.0</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
@@ -52,64 +44,98 @@ limitations under the License.
   </dependencyManagement>
 
   <dependencies>
-    <!-- Spring Boot Web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
-    <!-- Google Cloud Vertex AI -->
     <dependency>
-      <groupId>com.google.cloud</groupId>
-      <artifactId>google-cloud-vertexai</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-gcp-starter-logging</artifactId>
+      <version>1.2.8.RELEASE</version>
     </dependency>
 
-    <!-- Google Cloud AI Platform (선택) -->
+    <!-- Provides access the metadata server -->
     <dependency>
       <groupId>com.google.cloud</groupId>
-      <artifactId>google-cloud-aiplatform</artifactId>
+      <artifactId>spring-cloud-gcp-starter</artifactId>
+      <version>5.8.0</version>
     </dependency>
 
-    <!-- Google Cloud Storage -->
-    <dependency>
-      <groupId>com.google.cloud</groupId>
-      <artifactId>google-cloud-storage</artifactId>
-    </dependency>
-
-    <!-- Spring Boot DevTools -->
+    <!-- Optionally include development tools -->
+    <!-- Provides Automatic Restart functionality -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
-
-    <!-- 테스트 -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- 로깅 Pretty Print (선택) -->
+    <!-- Provides Pretty Printed JSON logs -->
     <dependency>
       <groupId>ch.qos.logback.contrib</groupId>
       <artifactId>logback-jackson</artifactId>
       <version>0.1.5</version>
       <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>4.12.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.junit.vintage</groupId>
+          <artifactId>junit-vintage-engine</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- GCS client -->
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-storage</artifactId>
+      <version>2.25.0</version>
+    </dependency>
+
+    <!-- <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-aiplatform</artifactId>
+      <version>3.57.0</version>
+    </dependency> -->
+    
+    <!-- <dependency>
+      <groupId>com.google.genai</groupId>
+      <artifactId>google-genai</artifactId>
+      <version>1.8.0</version>
+    </dependency> -->
+   <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-vertexai</artifactId>
+      <version>1.5.0</version>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Spring Boot -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>3.5.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
-      <!-- JIB for Cloud Run -->
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
@@ -121,7 +147,6 @@ limitations under the License.
         </configuration>
       </plugin>
 
-      <!-- Checkstyle -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
