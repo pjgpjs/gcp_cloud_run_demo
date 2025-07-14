@@ -35,7 +35,7 @@ public class VertexAiText {
       String projectId = ProjectConst.GCP_PROJECT_ID;
       String location = ProjectConst.LOCATION; // 예: "us-central1"
       
-      String modelName = "gemini-1.5-flash-001";
+      String modelName = "gemini-2.0-flash-001";
       String gcsUriA = "gs://document_compare/form_1040_2013.pdf";
       String gcsUriB = "gs://document_compare/form_1040_2023.pdf";
       // ------------ㄴㄴ
