@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gemini 분석 예제</title>
+</head>
+<body>
+  <h2>Gemini API 테스트</h2>
+  <button onclick="analyze()">분석 요청</button>
+  <pre id="result"></pre>
+
+  <script>
+    function analyze() {
+      fetch('/analyze')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('result').innerText = data;
+        })
+        .catch(error => {
+          document.getElementById('result').innerText = '에러: ' + error;
+        });
+    }
+  </script>
+</body>
+</html>

@@ -96,6 +96,29 @@ limitations under the License.
       </exclusions>
     </dependency>
 
+    <!-- GCS client -->
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-storage</artifactId>
+      <version>2.25.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-aiplatform</artifactId>
+      <version>3.57.0</version>
+    </dependency>
+    
+    <!-- <dependency>
+      <groupId>com.google.genai</groupId>
+      <artifactId>google-genai</artifactId>
+      <version>1.8.0</version>
+    </dependency> -->
+   <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-vertexai</artifactId>
+      <version>1.5.0</version>
+    </dependency>
   </dependencies>
 
   <build>

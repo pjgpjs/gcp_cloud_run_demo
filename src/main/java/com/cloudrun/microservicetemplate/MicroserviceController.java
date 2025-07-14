@@ -42,6 +42,15 @@ public class MicroserviceController {
     logger.info("Structured logging example.");
     logger.info("Structured logging example.");
     logger.info("Structured logging example.");
+    logger.info("Structured logging example.");
+    logger.info("Structured logging example.");
     return "Hello World! Modify";
+  }
+
+  @GetMapping("/analyze")
+  public @ResponseBody String analyze() {
+    VertexAiText generator = new VertexAiText();
+    String result = generator.request();
+    return result;
   }
 }
