@@ -38,29 +38,33 @@ public class VertexAiText {
       String modelName = "gemini-1.5-flash-001";
       String gcsUriA = "gs://document_compare/form_1040_2013.pdf";
       String gcsUriB = "gs://document_compare/form_1040_2023.pdf";
-      // ------------
+      // ------------ㄴㄴ
 
       try (VertexAI vertexAI = new VertexAI(projectId, location)) {
         GenerativeModel model = new GenerativeModel(modelName, vertexAI);
-        String promptText = "The first document is from 2013, and the second document is from 2023. How did the standard deduction evolve?";
+        // String promptText = "The first document is from 2013, and the second document is from 2023. How did the standard deduction evolve?";
         
-        // 1. 첫 번째 PDF 파일에 대한 Content 객체 생성
-        Content fileContentA = Content.newBuilder()
-            .addParts(PartMaker.fromMimeTypeAndData("application/pdf", gcsUriA))
-            .build();
+        // // 1. 첫 번째 PDF 파일에 대한 Content 객체 생성
+        // Content fileContentA = Content.newBuilder()
+        //     .addParts(PartMaker.fromMimeTypeAndData("application/pdf", gcsUriA))
+        //     .build();
           
-        // 2. 두 번째 PDF 파일에 대한 Content 객체 생성
-        Content fileContentB = Content.newBuilder()
-            .addParts(PartMaker.fromMimeTypeAndData("application/pdf", gcsUriB))
-            .build();
+        // // 2. 두 번째 PDF 파일에 대한 Content 객체 생성
+        // Content fileContentB = Content.newBuilder()
+        //     .addParts(PartMaker.fromMimeTypeAndData("application/pdf", gcsUriB))
+        //     .build();
           
-        // 3. 텍스트 프롬프트에 대한 Content 객체 생성
-        Content textContent = Content.newBuilder()
+        // // 3. 텍스트 프롬프트에 대한 Content 객체 생성
+        // Content textContent = Content.newBuilder()
+        //     .addParts(PartMaker.fromMimeTypeAndData("text/plain", promptText))
+        //     .build();
+        String promptText ="자기 소개 해줘줘";
+         Content textContent = Content.newBuilder()
             .addParts(PartMaker.fromMimeTypeAndData("text/plain", promptText))
             .build();
-          
         // 4. 모든 Content 객체를 리스트에 담아 요청 전송
-        List<Content> contents = List.of(fileContentA, fileContentB, textContent);
+        // List<Content> contents = List.of(fileContentA, fileContentB, textContent);
+        List<Content> contents = List.of(textContent);
         GenerateContentResponse response = model.generateContent(contents);
         
         String output = ResponseHandler.getText(response);
